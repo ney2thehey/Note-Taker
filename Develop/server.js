@@ -9,11 +9,12 @@ const { v4: uuidv4 } = require('uuid');
 const PORT = process.env.PORT || 3001;
 //need to import middleware express
 const app = express();
+app.use(express.static('public'));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(express.static('public'));
+
 
 // GET Route for html pages
 
@@ -35,12 +36,13 @@ app.get('/api/notes', (req, res) => {
 app.post('/api/notes', (req, res) => {
   console.log(req.body);
   const { title, text } = req.body;
+  
   if (req.body) {
-      const newNote = {
-          id: uuidv4(),
-          title,
-          text,
-      };
+    const newNote = {
+        id: uuidv4(),
+        title,
+         text,
+     };
 fs.readFile('./db/db.json', 'utf8', (err, data) => {
           if (err) {
               //console.error(err);
